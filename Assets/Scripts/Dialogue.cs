@@ -5,8 +5,8 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
     public string[] dialogueLines;
-    public float textSpeed;
-
+    public float textSpeed; //time between letters appearing on the screen
+    private bool isTyping;
     private int index;
 
     void Start()
@@ -17,31 +17,34 @@ public class Dialogue : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(dialogueText.text == dialogueLines[index])
+            if (isTyping == true)
             {
-                NextLine();
-            }
-            else
-            {
+                //Currently typing - skip to show full text
                 StopAllCoroutines();
                 dialogueText.text = dialogueLines[index];
+                isTyping = false;
             }
-        }
-        
+            else if (dialogueText.text == dialogueLines[index])
+            {
+                //That line is complete so it shows the next line
+                NextLine();
+            }
+        }        
     }
 
     public void NextDialogue()
     {
-        if (dialogueText.text == dialogueLines[index])
-        {
-            NextLine();
-        }
-        else
+        if (isTyping)
         {
             StopAllCoroutines();
             dialogueText.text = dialogueLines[index];
+            isTyping = false;
+        }
+        else if (dialogueText.text == dialogueLines[index])
+        {
+            NextLine();
         }
     }
 
@@ -53,11 +56,14 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
+        isTyping = true;
+        dialogueText.text = string.Empty;
         foreach (char c in dialogueLines[index].ToCharArray())
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+        isTyping = false;
     }
 
     public void NextLine()

@@ -9,7 +9,7 @@ public class Player_Interaction : MonoBehaviour
     {
         if (other.CompareTag("Interactable NPC"))
         {
-            Debug.Log("player can interact");
+            //Debug.Log("Player can interact");
             canInteract = true;
             Etext.SetActive(true);
         }
@@ -19,7 +19,7 @@ public class Player_Interaction : MonoBehaviour
     {
         if (other.CompareTag("Interactable NPC"))
         {
-            Debug.Log("player cannot interact");
+            //Debug.Log("Player cannot interact");
             canInteract = false;
             Etext.SetActive(false);
         }
