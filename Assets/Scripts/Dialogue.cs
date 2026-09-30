@@ -9,7 +9,7 @@ public class Dialogue : MonoBehaviour
     private bool isTyping;
     private int index;
 
-    void Start()
+    void OnEnable()
     {
         dialogueText.text = string.Empty;
         StartDialogue();
@@ -78,6 +78,7 @@ public class Dialogue : MonoBehaviour
         {
             gameObject.SetActive(false);
             Player_Movement.instance.canMove = true;
+            Player_Interaction.instance.canInteract = true;
         }
     }
 }

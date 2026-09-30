@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class Player_Interaction : MonoBehaviour
 {
-    private bool canInteract = false;
+    public bool canInteract = false;
     public GameObject Etext;
+    public static Player_Interaction instance;
+
+    void Start()
+    {
+        instance = this;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +35,6 @@ public class Player_Interaction : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(KeyCode.E))
         {
-            canInteract = false;
             Player_Movement.instance.canMove = false;
             NPC_Interaction.instance.Interact();
         }
